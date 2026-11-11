@@ -1,17 +1,16 @@
 # Bath Studio
 
-Single-page website for a marble bathroom studio. Plain HTML, CSS and JavaScript in one file (`index.html`), with no build step.
+Einseitige Website für ein Marmorbad-Studio (Deutsch). Reines HTML, CSS und JavaScript in einer Datei (`index.html`), ohne Build-Schritt.
 
-## Features
-- Loading screen with a percentage counter
-- Scroll-driven hero: the bathroom builds itself as you scroll (video scrubbing), with step captions and a side rail
-- Scroll reveal animations, animated stat counters, and a looping keyword ticker
-- Services, process, gallery and contact sections
-- Responsive layout for mobile
+## Funktionen
+- Ladebildschirm mit Prozentanzeige
+- Scroll-Hero: Das Bauvideo folgt dem Scrollen Bild für Bild, mit fünf Schritten, Seitenleiste und Fortschrittsbalken
+- Kopfzeile, die ihre Farbe an den Raum anpasst
+- Über uns mit Zählern, Laufband, „Warum Bath Studio“, Leistungen, Ablauf, Projekte, Beratung und Footer
+- Responsiv für Smartphones
 
-## Editing
-- Phone, email and service areas are in the `#contact` section and the footer.
-- Images and the hero video load from `ramanstudio.com/work-demos/levanto/`. To host them here instead, add them to an `img/` folder and change the URLs in `index.html`.
+## Video und Bilder
+Bilder und Video werden von `ramanstudio.com/work-demos/levanto/` geladen. Wenn `hero.mp4` neben `index.html` in dieses Repository gelegt wird, wird diese Kopie automatisch zuerst vollständig geladen, damit das Scrollen ganz flüssig läuft.
 
 ## Hosting
-Served with GitHub Pages from the `main` branch root.
+GitHub Pages, Branch `main`, Ordner `/`.
