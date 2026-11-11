@@ -36,53 +36,112 @@ em{font-style:normal;color:var(--brass)}
 /* ---------- loader ---------- */
 #loader{position:fixed;inset:0;z-index:999;background:var(--bg);display:grid;place-items:center;transition:opacity .8s var(--ease),transform .9s var(--ease)}
 #loader.done{opacity:0;transform:translateY(-3%);pointer-events:none}
-.ld{text-align:center;width:min(320px,70vw)}
-.ld-brand{font-family:Marcellus,serif;font-size:2rem;letter-spacing:.3em}
-.ld-sub{font-size:.62rem;letter-spacing:.4em;color:var(--mute);margin:.3em 0 2em}
-.ld-bar{height:1px;background:var(--line);overflow:hidden}
-#ldFill{height:100%;width:0;background:var(--brass);transition:width .3s}
-#ldPct{margin-top:1em;font-size:.68rem;letter-spacing:.3em;color:var(--sec)}
+.ld{width:min(300px,70vw)}
+.ld-brand{font-family:Marcellus,serif;font-size:46px;letter-spacing:.14em;text-align:center;color:var(--cream);line-height:1}
+.ld-brand small{display:block;font-family:Figtree,sans-serif;font-size:10px;font-weight:700;letter-spacing:.38em;color:var(--brass);margin-top:10px}
+.ld-bar{height:1px;background:var(--line);margin-top:34px;overflow:hidden}
+#ldFill{height:100%;width:0;background:var(--brass);transition:width .25s linear}
+#ldPct{margin-top:14px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.3em;color:var(--sec)}
 
-/* ---------- header ---------- */
-header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 5vw;transition:background .4s,backdrop-filter .4s}
-header.solid{background:rgba(22,11,10,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+/* ---------- header (changes colour as the room darkens) ---------- */
+:root{--headerH:66px}
+header{position:fixed;top:0;left:0;right:0;height:var(--headerH);z-index:90;display:flex;align-items:center;border-bottom:1px solid transparent;transition:background .45s var(--ease),border-color .45s var(--ease)}
+header .hwrap{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1240px;margin:0 auto;padding:0 28px}
+.brand{font-family:Marcellus,serif;font-size:24px;letter-spacing:.14em;line-height:1;color:var(--ink);text-decoration:none;transition:color .45s}
+.brand small{display:block;font-family:Figtree,sans-serif;font-size:8.5px;font-weight:800;letter-spacing:.34em;text-transform:uppercase;color:#5a2a22;margin-top:5px;transition:color .45s}
+nav{display:flex;align-items:center;gap:30px;padding:6px 6px 6px 26px;border-radius:999px;background:rgba(255,255,255,.22);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 8px 24px rgba(0,0,0,.12);transition:background .45s,border-color .45s}
+nav a{position:relative;color:var(--ink);text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:.06em;transition:color .45s}
+nav .lnk::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+nav .lnk:hover::after{transform:scaleX(1);transform-origin:left}
+.hbtn{background:var(--rosso);color:#fff!important;padding:11px 19px;border-radius:999px;transition:background .3s,transform .3s var(--ease)}
+.hbtn:hover{background:var(--rosso-dk);transform:translateY(-1px)}
+header.nav-light nav{background:rgba(22,11,10,.28);border-color:rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 8px 24px rgba(0,0,0,.22)}
+header.nav-light nav a{color:#fff}
+header.nav-light .hbtn{background:var(--brass);color:var(--ink)!important}
+header.brand-light .brand{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75)}
+header.brand-light .brand small{color:var(--brass-hi)}
+header.solid{background:rgba(22,11,10,.94);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+header.solid .brand,header.solid nav a{color:var(--cream);text-shadow:none}
+header.solid .brand small{color:var(--brass)}
+header.solid nav{background:rgba(255,255,255,.06);border-color:var(--line);box-shadow:none}
+header.solid .hbtn{background:var(--brass);color:var(--ink)!important}
+@media(max-width:860px){nav .lnk{display:none}nav{padding:0;background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}}
+
+/* ---------- hero: sticky stage, video scrubbed by scroll ---------- */
+.hero{position:relative;height:400vh;background:var(--bg)}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--bg)}
+.video-wrap,.video-wrap video{width:100%;height:100%}
+.video-wrap video{object-fit:cover;display:block}
+.hbar{position:absolute;left:0;top:0;height:2px;width:100%;background:var(--brass);transform-origin:left;transform:scaleX(0);z-index:5}
+.caps{position:absolute;inset:0;pointer-events:none}
+.cap{position:absolute;left:0;right:0;top:calc(var(--headerH) + 3vh);visibility:hidden;transition:visibility 0s .6s}
+.cap.on{visibility:visible;transition-delay:0s}
+.cap .inner{max-width:1240px;margin:0 auto;padding:0 28px}
+.cap .block{max-width:440px;opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .9s var(--ease)}
+.cap.on .block{opacity:1;transform:none}
+/* intro sits low-left on the bright drywall, dark ink, no card */
+.cap.intro{top:auto;bottom:12vh}
+.cap.intro .block{max-width:660px}
+.hero-h1{margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;letter-spacing:inherit}
+.hero-h1>span{display:block}
+.cap.intro .eyebrow{font-family:Figtree,sans-serif;font-size:11px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--rosso-dk)}
+.mark{font-family:Marcellus,Georgia,serif;font-size:clamp(52px,min(6.8vw,11.5vh),104px);line-height:.98;margin:14px 0 0;color:var(--ink)}
+.mark .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+.mark .w>i{display:inline-block;font-style:normal;transform:translateY(110%);transition:transform 1.1s var(--ease)}
+.mark .w:nth-child(2)>i{transition-delay:.08s}.mark .w:nth-child(3)>i{transition-delay:.16s}.mark .w:nth-child(4)>i{transition-delay:.24s}
+body.ready .mark .w>i{transform:none}
+.cap .sub{margin:18px 0 0;font-size:17px;line-height:1.6;color:#140a08;font-weight:700;max-width:42ch;opacity:0;transition:opacity 1s .55s}
+body.ready .cap .sub{opacity:1}
+/* build captions: top-left, over the red marble */
+.hcard{text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 1px rgba(0,0,0,.7)}
+.cap .block.hcard{max-width:380px}
+.cap.ink .hcard{text-shadow:none}.cap.ink h2,.cap.ink p.body{color:var(--ink)}.cap.ink h2 em{color:var(--rosso)}.cap.ink .kick{color:var(--rosso-dk)}
+.kick{font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--brass-hi)}
+.cap h2{font-size:clamp(32px,min(3.2vw,5.6vh),48px);line-height:1.04;margin:10px 0 0;color:#fff}
+.cap h2 em{color:var(--brass-hi)}
+.cap p.body{margin:12px 0 0;font-size:15px;line-height:1.6;color:#fff;font-weight:600;max-width:34ch}
+.cta{display:inline-block;margin-top:20px;background:var(--brass);color:var(--ink);text-decoration:none;font-size:13px;font-weight:800;letter-spacing:.04em;padding:14px 24px;border-radius:999px;pointer-events:auto;transition:transform .3s var(--ease),background .3s}
+.cta:hover{transform:translateY(-2px);background:var(--brass-hi)}
+/* step rail on the right */
+.rail{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:4;pointer-events:none;opacity:0;transition:opacity .6s}
+.rail.live{opacity:1}
+.rail div{display:flex;align-items:center;gap:12px;font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);text-shadow:0 1px 2px rgba(0,0,0,.85);transition:color .5s}
+.rail div i{display:block;width:18px;height:1px;background:currentColor;transition:width .6s var(--ease)}
+.rail div.on{color:#fff}.rail div.on i{width:44px;background:var(--brass)}
+.rail.ink div{color:rgba(28,15,13,.55);text-shadow:none}.rail.ink div.on{color:var(--ink)}.rail.ink div.on i{background:var(--rosso)}
+.scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:9px;font-size:10px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);transition:opacity .5s}
+.scrollcue i{width:1px;height:30px;background:linear-gradient(to bottom,var(--ink),transparent);animation:cue 2s infinite}
+@keyframes cue{0%,100%{opacity:.25;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* phones / portrait: video shown 16:9 under the header, captions below it */
+@media (max-width:640px), (max-width:860px) and (orientation:portrait){
+.hero{height:340vh}
+header{background:rgba(22,11,10,.94)}
+.brand,nav a{color:var(--cream)!important;text-shadow:none!important}
+.brand small{color:var(--brass)!important}
+.hbtn{background:var(--brass)!important;color:var(--ink)!important}
+.stage{height:100svh}
+.video-wrap,.video-wrap video{height:auto}
+.video-wrap video{width:100%;aspect-ratio:16/9;object-fit:contain;margin-top:var(--headerH)}
+.cap,.cap.intro{top:calc(var(--headerH) + 56.25vw + 24px);bottom:auto}
+.hcard{text-shadow:none}.cap .block.hcard{max-width:none}
+.cap.ink h2,.cap.ink p.body{color:#fff}.cap.ink h2 em{color:var(--brass)}.cap.ink .kick{color:var(--brass-hi)}
+.cap.intro .eyebrow{color:var(--brass)}
+.mark{font-size:clamp(40px,11vw,62px);color:var(--cream)}
+.cap .sub{color:var(--sec);font-weight:500}
+.rail{top:calc(var(--headerH) + 56.25vw - 92px);transform:none;right:auto;left:12px;gap:6px;padding:9px 11px;border-radius:9px;background:rgba(22,11,10,.55)}
+.rail.ink div{color:rgba(255,255,255,.6)}.rail.ink div.on{color:#fff}
+.rail div{font-size:8.5px}.rail div i{width:10px}.rail div.on i{width:22px}
+.hbar{top:calc(var(--headerH) + 56.25vw - 2px)}
+.scrollcue{display:none}
+}
+@media (max-height:520px) and (orientation:landscape){
+.mark{font-size:40px}.cap h2{font-size:28px}.cap .sub,.cap p.body{font-size:13px}
+}
+/* footer logo */
 .logo{text-decoration:none;line-height:1}
 .logo b{display:block;font-family:Marcellus,serif;font-weight:400;font-size:1.35rem;letter-spacing:.24em}
 .logo small{display:block;font-size:.55rem;letter-spacing:.38em;color:var(--sec);margin-top:4px}
-nav{display:flex;align-items:center;gap:6px;background:rgba(243,232,218,.82);backdrop-filter:blur(10px);padding:6px;border-radius:999px;color:var(--ink)}
-nav a{text-decoration:none;font-size:.82rem;font-weight:600;padding:.6em 1.1em;border-radius:999px;transition:background .3s}
-nav a:hover{background:rgba(28,15,13,.08)}
-nav a.btn{color:var(--cream);padding:.7em 1.3em}
-@media(max-width:760px){nav a:not(.btn){display:none}}
-
-/* ---------- hero scroll-scrub ---------- */
-#hero{position:relative;height:600vh}
-.stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#cfcac4}
-.stage video,.stage .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.stage::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(243,232,218,.55) 0%,rgba(243,232,218,0) 55%);pointer-events:none;transition:opacity .6s}
-.stage.dark::after{background:linear-gradient(90deg,rgba(22,11,10,.7) 0%,rgba(22,11,10,0) 60%)}
-.intro{position:absolute;left:5vw;bottom:14vh;z-index:3;max-width:640px;color:var(--ink);transition:opacity .5s,transform .6s var(--ease)}
-.intro .eyebrow{color:var(--rosso)}
-.intro h1{font-size:clamp(2.8rem,7vw,6rem);margin:.25em 0 .3em}
-.intro p{font-weight:500;max-width:420px;margin:0 0 1.6em}
-.intro.out{opacity:0;transform:translateY(-30px);pointer-events:none}
-#scrollcue{position:absolute;left:50%;bottom:4vh;transform:translateX(-50%);z-index:3;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;font-weight:600;color:var(--ink);transition:opacity .4s}
-#scrollcue::after{content:"";display:block;width:1px;height:34px;margin:10px auto 0;background:currentColor;animation:cue 1.8s infinite}
-@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-.cap{position:absolute;left:5vw;bottom:14vh;z-index:3;max-width:560px;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .8s var(--ease);pointer-events:none}
-.cap.on{opacity:1;transform:none}
-.cap .num{font-family:Marcellus,serif;color:var(--brass);font-size:.95rem;letter-spacing:.2em}
-.cap h2{font-size:clamp(2.2rem,5vw,4.2rem);margin:.2em 0 .3em;color:var(--cream);text-shadow:0 2px 30px rgba(0,0,0,.35)}
-.cap p{color:var(--cream);max-width:380px;margin:0;text-shadow:0 1px 14px rgba(0,0,0,.5)}
-#rail{position:absolute;right:4vw;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;gap:16px}
-#rail div{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:rgba(28,15,13,.45);display:flex;align-items:center;gap:10px;justify-content:flex-end;transition:color .4s}
-#rail div::after{content:"";width:18px;height:1px;background:currentColor;transition:width .4s var(--ease)}
-#rail div.on{color:var(--brass-hi)}
-#rail div.on::after{width:42px}
-.stage.dark #rail div{color:rgba(243,232,218,.45)}
-.stage.dark #rail div.on{color:var(--brass-hi)}
-#hbar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--brass);z-index:4}
-@media(max-width:760px){#rail{display:none}.intro,.cap{bottom:10vh;right:5vw}}
 
 /* ---------- sections ---------- */
 section{padding:clamp(80px,12vw,150px) 0}
@@ -181,51 +240,80 @@ footer{border-top:1px solid var(--line);padding:50px 0 40px}
 
 <div id="loader" aria-hidden="true">
   <div class="ld">
-    <div class="ld-brand">BATH</div>
-    <div class="ld-sub">STUDIO · VANCOUVER</div>
+    <div class="ld-brand">BATH<small>Studio · Vancouver</small></div>
     <div class="ld-bar"><div id="ldFill"></div></div>
     <div id="ldPct">LOADING · 0%</div>
   </div>
 </div>
 
 <header id="header">
-  <a class="logo" href="#top"><b>BATH</b><small>STUDIO · VANCOUVER</small></a>
-  <nav>
-    <a href="#services">Services</a>
-    <a href="#process">Process</a>
-    <a href="#work">Our work</a>
-    <a class="btn" href="#contact">Book a consultation</a>
-  </nav>
+  <div class="hwrap">
+    <a class="brand" href="#top">BATH<small>Studio · Vancouver</small></a>
+    <nav>
+      <a class="lnk" href="#services">Services</a>
+      <a class="lnk" href="#process">Process</a>
+      <a class="lnk" href="#work">Our work</a>
+      <a class="hbtn" href="#contact">Book a consultation</a>
+    </nav>
+  </div>
 </header>
 
 <main id="top">
-  <!-- Scroll-driven hero: the video plays forward as you scroll -->
-  <div id="hero">
-    <div class="stage" id="stage">
-      <img class="poster" src="https://ramanstudio.com/work-demos/levanto/poster.jpg" alt="">
-      <video id="v" muted playsinline preload="auto" poster="https://ramanstudio.com/work-demos/levanto/poster.jpg">
-        <source src="https://ramanstudio.com/work-demos/levanto/hero.mp4" type="video/mp4">
-      </video>
+  <!-- Scroll-driven hero: scrolling scrubs the build video frame by frame -->
+  <section class="hero" id="hero">
+    <div class="stage">
+      <div class="video-wrap"><video id="v" playsinline muted preload="auto" poster="https://ramanstudio.com/work-demos/levanto/poster.jpg" aria-hidden="true"></video></div>
+      <div class="hbar" id="hbar"></div>
 
-      <div class="intro" id="intro">
-        <div class="eyebrow">Bath Studio · Vancouver</div>
-        <h1>Bare board<br>to red marble.</h1>
-        <p>Marble bathroom renovations across Vancouver, designed, built and finished by one team.</p>
-        <a class="btn" href="#contact">Book a free consultation</a>
+      <div class="rail ink" id="rail" aria-hidden="true">
+        <div data-a="0.15"><i></i>Floor</div>
+        <div data-a="0.40"><i></i>Walls</div>
+        <div data-a="0.53"><i></i>Shower</div>
+        <div data-a="0.68"><i></i>Vanity</div>
+        <div data-a="0.84"><i></i>Light</div>
       </div>
 
-      <div class="cap" data-at=".12"><div class="num">01 — Floor</div><h2>Cream marble, <em>edged in red.</em></h2><p>Large-format slabs laid on a heated base, bordered in Rosso.</p></div>
-      <div class="cap" data-at=".3"><div class="num">02 — Walls</div><h2>Rosso marble, <em>floor to ceiling.</em></h2><p>Book-matched panels with tight, honest joints.</p></div>
-      <div class="cap" data-at=".5"><div class="num">03 — Shower</div><h2>A walk-in, <em>lit from within.</em></h2><p>Frameless glass, a linear drain and a warm lit niche.</p></div>
-      <div class="cap" data-at=".68"><div class="num">04 — Vanity</div><h2>Floating stone, <em>with brass.</em></h2><p>One solid slab, wall-hung, finished with brushed brass taps.</p></div>
-      <div class="cap" data-at=".86"><div class="num">05 — Finished</div><h2>Built to last, <em>backed for two years.</em></h2><p>Every room handed over with a two-year workmanship warranty.</p></div>
+      <div class="caps">
+        <div class="cap intro on" data-a="0.00" data-b="0.12"><div class="inner"><div class="block">
+          <h1 class="hero-h1"><span class="eyebrow">Bath Studio · Vancouver</span><span class="mark"><span class="w"><i>Bare</i></span> <span class="w"><i>board</i></span> <span class="w"><i>to red</i></span> <span class="w"><i>marble.</i></span></span></h1>
+          <p class="sub">Marble bathroom renovations across Vancouver, designed, built and finished by one team.</p>
+        </div></div></div>
 
-      <div id="rail"><div>Floor</div><div>Walls</div><div>Shower</div><div>Vanity</div><div>Light</div></div>
-      <div id="scrollcue">Watch the room come together</div>
-      <div id="hbar"></div>
+        <div class="cap ink" data-a="0.16" data-b="0.27"><div class="inner"><div class="block hcard">
+          <div class="kick">01 · Floor</div>
+          <h2>Cream marble,<br><em>edged in red.</em></h2>
+          <p class="body">Large format cream marble laid flat and level, framed with a Rosso border that runs into the shower.</p>
+        </div></div></div>
+
+        <div class="cap" data-a="0.43" data-b="0.51"><div class="inner"><div class="block hcard">
+          <div class="kick">02 · Walls</div>
+          <h2>Rosso marble,<br><em>floor to ceiling.</em></h2>
+          <p class="body">Book-matched red marble slabs on every dry wall, with the veins lined up across each joint.</p>
+        </div></div></div>
+
+        <div class="cap" data-a="0.54" data-b="0.64"><div class="inner"><div class="block hcard">
+          <div class="kick">03 · Shower</div>
+          <h2>A walk-in shower,<br><em>lit from within.</em></h2>
+          <p class="body">Curbless and fully waterproofed, with a brass rain head, a hand shower and a lit niche running wall to wall.</p>
+        </div></div></div>
+
+        <div class="cap" data-a="0.68" data-b="0.80"><div class="inner"><div class="block hcard">
+          <div class="kick">04 · Vanity</div>
+          <h2>Floating stone,<br><em>warm brass.</em></h2>
+          <p class="body">A floating marble vanity with a vessel basin, wall-mounted brass taps, an arched mirror and twin sconces.</p>
+        </div></div></div>
+
+        <div class="cap" data-a="0.86" data-b="1.00"><div class="inner"><div class="block hcard">
+          <div class="kick">05 · Finished</div>
+          <h2>Ready for the<br><em>first long soak.</em></h2>
+          <p class="body">Every circuit on a dimmer, cleaned and handed over with a two year workmanship warranty.</p>
+          <a class="cta" href="#contact">Book a free consultation</a>
+        </div></div></div>
+      </div>
+
+      <div class="scrollcue" id="scrollcue"><span>Watch the room come together</span><i></i></div>
     </div>
-  </div>
-
+  </section>
   <section id="about">
     <div class="wrap about-grid">
       <div class="reveal">
@@ -344,76 +432,102 @@ footer{border-top:1px solid var(--line);padding:50px 0 40px}
 
 <script>
 (function(){
+  /* Video source: a copy in this repo (hero.mp4) is used first because it can be
+     fully pre-downloaded for perfectly smooth scrubbing; otherwise the remote copy. */
+  var LOCAL='hero.mp4', REMOTE='https://ramanstudio.com/work-demos/levanto/hero.mp4';
+
   var body=document.body, v=document.getElementById('v'), hero=document.getElementById('hero'),
-      stage=document.getElementById('stage'), header=document.getElementById('header'),
-      intro=document.getElementById('intro'), cue=document.getElementById('scrollcue'),
-      hbar=document.getElementById('hbar'), fill=document.getElementById('ldFill'),
-      pct=document.getElementById('ldPct'), loader=document.getElementById('loader');
-  var caps=[].slice.call(document.querySelectorAll('.cap')),
-      rail=[].slice.call(document.querySelectorAll('#rail div'));
+      header=document.getElementById('header'), cue=document.getElementById('scrollcue'),
+      hbar=document.getElementById('hbar'), railEl=document.getElementById('rail'),
+      fill=document.getElementById('ldFill'), pct=document.getElementById('ldPct'), loader=document.getElementById('loader');
+  var caps=[].slice.call(document.querySelectorAll('.cap')), rail=[].slice.call(document.querySelectorAll('#rail div'));
+  var dur=8.167, cur=0, target=0, inflight=false, primed=false, primeUntil=0, released=false;
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.getElementById('yr').textContent=new Date().getFullYear();
   function clamp(x,a,b){return x<a?a:x>b?b:x;}
 
-  /* ---- loader: tracks video buffering, never blocks for long ---- */
-  var shown=0, goal=8, released=false;
+  /* ---- loader ---- */
+  var shown=0;
+  function setP(p){p=clamp(p,0,100); if(p<shown)return; shown=p; fill.style.width=p+'%'; pct.textContent='LOADING · '+Math.round(p)+'%';}
   function release(){
-    if(released)return; released=true; goal=100;
-    setTimeout(function(){loader.classList.add('done');body.classList.remove('is-loading');},450);
+    if(released)return; released=true; setP(100);
+    setTimeout(function(){
+      body.classList.remove('is-loading'); loader.classList.add('done');
+      setTimeout(function(){loader.style.display='none';},900);
+      setTimeout(function(){body.classList.add('ready');},250);
+      onScroll();
+    },250);
   }
-  (function tickLoader(){
-    shown+= (goal-shown)*.12;
-    if(!released) goal=Math.min(goal+.35,92);
-    fill.style.width=shown+'%'; pct.textContent='LOADING · '+Math.round(shown)+'%';
-    if(shown<99.5) requestAnimationFrame(tickLoader);
-  })();
-  function onBuffer(){
-    try{ if(v.duration && v.buffered.length){
-      var p=v.buffered.end(v.buffered.length-1)/v.duration*100; goal=Math.max(goal,Math.min(p,95));
-      if(p>35) release();
-    }}catch(e){}
-  }
-  v.addEventListener('progress',onBuffer);
-  v.addEventListener('canplaythrough',release);
-  v.addEventListener('loadeddata',function(){stage.querySelector('.poster').style.opacity=0;});
-  window.addEventListener('load',function(){setTimeout(release,1500);});
-  setTimeout(release,6000);
+  /* creep the bar while waiting so it never looks frozen */
+  var creep=setInterval(function(){ if(released)return clearInterval(creep); if(shown<60)setP(shown+1); },120);
 
-  /* ---- scroll-scrub: map hero scroll progress to video time ---- */
-  var target=0, cur=0, seeking=false;
-  v.addEventListener('seeked',function(){seeking=false;});
-  function progress(){
-    var r=hero.getBoundingClientRect(), total=hero.offsetHeight-innerHeight;
-    return clamp(-r.top/total,0,1);
-  }
-  function onScroll(){
-    var p=progress();
-    target=p;
-    header.classList.toggle('solid', scrollY>hero.offsetHeight-innerHeight-10);
-    intro.classList.toggle('out', p>.05);
-    cue.style.opacity=p>.03?0:1;
-    hbar.style.width=(p*100)+'%';
-    stage.classList.toggle('dark', p>.1);
-    var active=-1;
-    caps.forEach(function(c,i){
-      var at=parseFloat(c.dataset.at), next=caps[i+1]?parseFloat(caps[i+1].dataset.at):1.01;
-      var on=p>=at && p<next-.02; c.classList.toggle('on',on); if(on)active=i;
+  function useRemote(){
+    v.src=REMOTE; v.preload='auto'; v.load();
+    /* track buffering of the remote file */
+    v.addEventListener('progress',function(){
+      try{ if(v.duration&&v.buffered.length){var p=v.buffered.end(v.buffered.length-1)/v.duration*100; setP(p*.97); if(p>=99)release();} }catch(e){}
     });
-    rail.forEach(function(d,i){d.classList.toggle('on',i===active);});
+    v.addEventListener('canplaythrough',function(){setTimeout(release,1200);});
+    setTimeout(release,9000);
   }
-  function loop(){
-    if(v.duration && !reduce){
-      cur+=(target-cur)*.18;
-      var t=cur*(v.duration-.05);
-      if(!seeking && Math.abs(v.currentTime-t)>.012){seeking=true; v.currentTime=t;}
-    }
+
+  /* try the local copy, streamed so the bar shows real progress */
+  fetch(LOCAL).then(function(r){
+    if(!r.ok||!r.body)throw 0;
+    var total=+(r.headers.get('content-length')||0), got=0, chunks=[], rd=r.body.getReader();
+    return (function pump(){return rd.read().then(function(x){
+      if(x.done)return new Blob(chunks,{type:'video/mp4'});
+      chunks.push(x.value); got+=x.value.length; if(total)setP(got/total*97); return pump();
+    });})();
+  }).then(function(b){
+    setP(99); v.src=URL.createObjectURL(b); v.preload='auto'; v.load(); setTimeout(release,15000);
+  }).catch(useRemote);
+  setTimeout(release,60000);
+
+  v.addEventListener('loadeddata',function(){
+    if(v.duration&&isFinite(v.duration))dur=v.duration;
+    prime(); if(v.src.indexOf('blob:')===0)release(); onScroll();
+  });
+  v.addEventListener('error',release);
+  v.addEventListener('seeked',function(){inflight=false;});
+
+  /* a quick play/pause unlocks seeking on iOS/Safari */
+  function prime(){
+    if(primed)return; primed=true; primeUntil=performance.now()+350; var done=false;
+    function stop(){ if(done)return; done=true; try{v.pause();}catch(e){} try{v.currentTime=0.001;}catch(e){} }
+    try{ var p=v.play(); if(p&&p.then){ p.then(function(){
+        if('requestVideoFrameCallback' in v)v.requestVideoFrameCallback(function(){stop();}); else setTimeout(stop,120);
+      }).catch(stop); } else setTimeout(stop,120); }catch(e){stop();}
+    setTimeout(stop,300);
+  }
+  /* the video must never actually play on its own */
+  (function watch(){ if(!v.paused&&performance.now()>primeUntil){try{v.pause();}catch(e){}} requestAnimationFrame(watch); })();
+
+  /* ---- scrub loop: ease towards the scroll position, one seek at a time ---- */
+  (function loop(){
+    var d=(v.duration&&isFinite(v.duration))?v.duration:dur;
+    cur+=(target-cur)*(reduce?1:0.3);
+    var want=clamp(cur,0,1)*d;
+    if(v.buffered&&v.buffered.length){var be=v.buffered.end(v.buffered.length-1); if(want>be)want=Math.max(0,be-0.05);}
+    if(!inflight&&v.readyState>=2&&Math.abs(want-v.currentTime)>0.006){inflight=true; try{v.currentTime=want;}catch(e){inflight=false;}}
     requestAnimationFrame(loop);
+  })();
+
+  function onScroll(){
+    var r=hero.getBoundingClientRect(), total=hero.offsetHeight-innerHeight, p=clamp(-r.top/total,0,1);
+    target=clamp(p/0.96,0,1);
+    hbar.style.transform='scaleX('+p.toFixed(4)+')';
+    header.classList.toggle('solid', r.bottom<innerHeight*0.6);
+    header.classList.toggle('nav-light', p>=0.35);   /* walls behind the nav have gone dark */
+    header.classList.toggle('brand-light', p>=0.45); /* marble behind the logo has gone dark */
+    if(cue)cue.style.opacity=p>0.04?0:1;
+    for(var i=0;i<caps.length;i++){ var c=caps[i], on=p>=+c.dataset.a&&p<=+c.dataset.b; c.classList.toggle('on',on); c.inert=!on; }
+    var ci=-1; for(var j=0;j<rail.length;j++){ if(p>=+rail[j].dataset.a)ci=j; }
+    for(var k=0;k<rail.length;k++)rail[k].classList.toggle('on',k===ci);
+    railEl.classList.toggle('live', ci>=0);
+    railEl.classList.toggle('ink', p<0.36&&innerWidth>860);
   }
-  addEventListener('scroll',onScroll,{passive:true});
-  addEventListener('resize',onScroll);
-  onScroll(); loop();
-  /* iOS needs a play/pause to allow seeking */
-  v.play && v.play().then(function(){v.pause();}).catch(function(){});
+  addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',onScroll); onScroll();
 
   /* ---- reveal on scroll + counters ---- */
   var io=new IntersectionObserver(function(es){
