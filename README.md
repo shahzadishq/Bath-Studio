@@ -10,7 +10,10 @@ Einseitige Website für ein Marmorbad-Studio (Deutsch). Reines HTML, CSS und Jav
 - Responsiv für Smartphones
 
 ## Video und Bilder
-Bilder und Video werden von `ramanstudio.com/work-demos/levanto/` geladen. Wenn `hero.mp4` neben `index.html` in dieses Repository gelegt wird, wird diese Kopie automatisch zuerst vollständig geladen, damit das Scrollen ganz flüssig läuft.
+- `hero.mp4` – Bauvideo (1284×716, 60 fps, jedes Bild ein Keyframe), wird vor dem Start vollständig geladen
+- `poster.jpg` – Standbild, bis das Video bereit ist
+- `img/g1.jpg`, `img/g2.jpg`, `img/g3.jpg` – Projektgalerie
+- `about.jpg` wird noch von `ramanstudio.com` geladen
 
 ## Hosting
 GitHub Pages, Branch `main`, Ordner `/`.
