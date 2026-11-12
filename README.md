@@ -12,8 +12,8 @@ Einseitige Website für ein Marmorbad-Studio (Deutsch). Reines HTML, CSS und Jav
 ## Video und Bilder
 - `hero.mp4` – Bauvideo (1284×716, 60 fps, jedes Bild ein Keyframe), wird vor dem Start vollständig geladen
 - `poster.jpg` – Standbild, bis das Video bereit ist
+- `img/about.jpg` – Bild im Bereich „Über uns“
 - `img/g1.jpg`, `img/g2.jpg`, `img/g3.jpg` – Projektgalerie
-- `about.jpg` wird noch von `ramanstudio.com` geladen
 
 ## Hosting
 GitHub Pages, Branch `main`, Ordner `/`.
